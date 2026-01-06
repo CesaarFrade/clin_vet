@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  app_vet:
+    build: ClinicaVeterinaria
+    mem_limit: 512m
+    ports:
+      - "8081:8080" #Puerto 8081 ocupado por el ordenador local
+    environment:
+      DB_URL:  jdbc:mysql://clinica_vet:3306/clinica_veterinaria?useSSL=false&serverTimezone=UTC
+      DB_USERNAME: root 
+      DB_PASSWORD:
+    restart: always
+    depends_on:
+      clinica_vet:
+        condition: service_healthy
+  clinica_vet:
+    image: mysql:8.0.33
+    ports: 
+      - "3305:3306" #Puerto 3307 ocupado por el ordenador local
+    environment: 
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_PASSWORD: 
+      MYSQL_DATABASE: clinica_veterinaria
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
