@@ -17,7 +17,7 @@ services:
   clinica_vet:
     image: mysql:8.0.33
     ports: 
-      - "3305:3306" #Puerto 3307 ocupado por el ordenador local
+      - "3310:3306" #Puerto 3307 ocupado por el ordenador local
     environment: 
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_PASSWORD: 
